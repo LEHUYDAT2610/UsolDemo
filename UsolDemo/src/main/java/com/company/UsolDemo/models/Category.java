@@ -13,12 +13,12 @@ import java.util.Collection;
 public class Category {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long category_ID;
-    @Column(name = "Category_Name")
-    private String category_Name;
+    private Long categoryID;
+    @Column(name = "CategoryName")
+    private String categoryName;
 
-    @Column(name = "Category_Image")
-    private String category_image;
+    @Column(name = "CategoryImage")
+    private String categoryImage;
 
     @OneToMany(mappedBy = "category", cascade = CascadeType.ALL) // Quan hệ 1-n với đối tượng ở dưới (Person) (1 địa điểm có nhiều người ở)
     // MapopedBy trỏ tới tên biến Address ở trong Person.

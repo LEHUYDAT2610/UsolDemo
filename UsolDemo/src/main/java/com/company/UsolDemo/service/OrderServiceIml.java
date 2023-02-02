@@ -15,7 +15,7 @@ public class OrderServiceIml implements OrderService{
     @Override
     public Order saveOrder(Order order) {
         Date date = new Date();
-        order.setOrder_Date(date);
+        order.setOrderDate(date);
         return repo.save(order);
     }
 

@@ -15,37 +15,37 @@ import java.util.Date;
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long product_ID;
+    private Long productID;
 
-    @Column(name = "Product_Name")
-    private String product_Name;
-    @Column(name = "Product_Price")
+    @Column(name = "ProductName")
+    private String productName;
+    @Column(name = "ProductPrice")
 
     private double price;
-    @Column(name = "Product-Description")
+    @Column(name = "ProductDescription")
 
-    private String product_Decription;
+    private String productDecription;
     @Column(name = "Discount")
 
     private double discount;
-    @Column(name = "Image_Link")
-    private String Image_link;
+    @Column(name = "ImageLink")
+    private String imageLink;
     @Column(name = "Image")
-    private String Image;
-    @Column(name = "Product_Created")
-    private Date product_Created;
+    private String image;
+    @Column(name = "ProductCreated")
+    private Date productCreated;
     @Column(name = "View")
     private int view;
 
     // Many to One Có nhiều người ở 1 địa điểm.
     @ManyToOne
-    @JoinColumn(name = "brand_ID") // thông qua khóa ngoại address_id
+    @JoinColumn(name = "BrandID") // thông qua khóa ngoại address_id
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
     private Brand brand;
 
     @ManyToOne
-    @JoinColumn(name = "category_ID") // thông qua khóa ngoại address_id
+    @JoinColumn(name = "CategoryID") // thông qua khóa ngoại address_id
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
     private Category category;

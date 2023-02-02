@@ -16,7 +16,7 @@ public class ProductServiceIml implements ProductService{
     @Override
     public Product saveProduct(Product product) {
         Date date = new Date();
-        product.setProduct_Created(date);
+        product.setProductCreated(date);
         return repo.save(product);
     }
 

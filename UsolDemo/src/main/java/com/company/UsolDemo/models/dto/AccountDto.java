@@ -10,26 +10,26 @@ import lombok.Setter;
 public class AccountDto {
     private Long account_ID;
     private String userName;
-    private String fullname;
+    private String fullName;
     private String address;
     private String phone;
     private String email;
-    private String account_Image;
-    private int account_Role;
-    private int account_Status;
+    private String accountImage;
+    private int accountRole;
+    private int accountStatus;
 
     public AccountDto() {
     }
 
     public AccountDto(Account account) {
-        this.account_ID = account.getAccount_ID();
+        this.account_ID = account.getAccountID();
         this.userName = account.getUserName();
-        this.fullname = account.getFullname();
+        this.fullName = account.getFullName();
         this.address = account.getAddress();
         this.phone = account.getPhone();
         this.email = account.getEmail();
-        this.account_Image = account.getAccount_Image();
-        this.account_Role = 1;
-        this.account_Status = 1;
+        this.accountImage = account.getAccountImage();
+        this.accountRole = 1;
+        this.accountStatus = 1;
     }
 }

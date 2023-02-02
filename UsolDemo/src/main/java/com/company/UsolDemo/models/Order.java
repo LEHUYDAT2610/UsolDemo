@@ -13,15 +13,15 @@ import java.util.Date;
 public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long order_ID;
+    private Long orderID;
 
-    @Column(name = "Order_Date")
-    private Date order_Date;
-    @Column(name = "Order_Status")
-    private int order_Status;
+    @Column(name = "OrderDate")
+    private Date orderDate;
+    @Column(name = "OrderStatus")
+    private int orderStatus;
 
     @ManyToOne
-    @JoinColumn(name = "account_ID") // thông qua khóa ngoại address_id
+    @JoinColumn(name = "accountID") // thông qua khóa ngoại address_id
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
     private Account account;

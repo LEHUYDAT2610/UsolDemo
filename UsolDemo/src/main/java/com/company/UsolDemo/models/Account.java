@@ -8,19 +8,18 @@ import java.util.Collection;
 
 @Entity
 @Table(name = "Account")
-@Getter
-@Setter
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class Account {
     @Id
     @GeneratedValue
-    private Long account_ID;
-    @Column(name = "Username")
+    private Long accountID;
+    @Column(name = "UserName")
     private String userName;
 
     @Column(name = "FullName")
-    private String fullname;
+    private String fullName;
     @Column(name = "Password")
 
     private String password;
@@ -32,11 +31,11 @@ public class Account {
     @Column(name = "Email")
     private String email;
     @Column(name = "Image")
-    private String account_Image;
+    private String accountImage;
     @Column(name = "Status")
-    private int account_Status;
+    private int accountStatus;
     @Column(name = "Role")
-    private int account_Role;
+    private int accountRole;
 
     @OneToMany(mappedBy = "account", cascade = CascadeType.ALL)
     @EqualsAndHashCode.Exclude
@@ -44,12 +43,12 @@ public class Account {
     private Collection<Order> orders;
 
     public Account(AccountDto accountDto) {
-        this.account_ID = accountDto.getAccount_ID();
+        this.accountID = accountDto.getAccount_ID();
         this.userName = accountDto.getUserName();
-        this.fullname = accountDto.getFullname();
+        this.fullName = accountDto.getFullName();
         this.address = accountDto.getAddress();
         this.phone = accountDto.getPhone();
         this.email = accountDto.getEmail();
-        this.account_Image = accountDto.getAccount_Image();
+        this.accountImage = accountDto.getAccountImage();
     }
 }

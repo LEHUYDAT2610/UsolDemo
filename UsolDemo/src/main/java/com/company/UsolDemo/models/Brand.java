@@ -14,10 +14,10 @@ public class Brand {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long brandId;
-    @Column(name = "Brand_Name")
+    @Column(name = "BrandName")
     private String brandName;
 
-    @Column(name = "Brand_Image")
+    @Column(name = "BrandImage")
     private String brandImage;
 
     @OneToMany(mappedBy = "brand", cascade = CascadeType.ALL) // Quan hệ 1-n với đối tượng ở dưới (Person) (1 địa điểm có nhiều người ở)

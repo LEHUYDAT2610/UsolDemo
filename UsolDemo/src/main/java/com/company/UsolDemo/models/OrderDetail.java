@@ -14,18 +14,18 @@ public class OrderDetail {
     @EmbeddedId
     private CourseRatingKey id;
 
-    @Column(name = "Order_Quantity")
-    private int order_Quantity;
-    @Column(name = "Order_Amuont")
-    private double order_Amuont;
+    @Column(name = "OrderQuantity")
+    private int orderQuantity;
+    @Column(name = "OrderAmuont")
+    private double orderAmuont;
 
     @ManyToOne
-    @MapsId("order_ID")
-    @JoinColumn(name = "order_ID")
+    @MapsId("OrderID")
+    @JoinColumn(name = "OrderID")
     private Order order;
 
     @ManyToOne
-    @MapsId("product_ID")
-    @JoinColumn(name = "product_ID")
+    @MapsId("ProductID")
+    @JoinColumn(name = "ProductID")
     private Product product;
 }

@@ -13,9 +13,9 @@ import java.io.Serializable;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CourseRatingKey  implements Serializable {
-    @Column(name = "order_ID")
-    Long order_ID;
+    @Column(name = "OrderID")
+    Long orderID;
 
-    @Column(name = "product_ID")
-    Long product_ID;
+    @Column(name = "ProductID")
+    Long productID;
 }
