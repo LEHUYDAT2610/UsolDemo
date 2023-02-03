@@ -26,16 +26,11 @@ public class Product {
 
     private String productDecription;
     @Column(name = "Discount")
-
     private double discount;
-    @Column(name = "ImageLink")
-    private String imageLink;
     @Column(name = "Image")
     private String image;
     @Column(name = "ProductCreated")
     private Date productCreated;
-    @Column(name = "View")
-    private int view;
 
     // Many to One Có nhiều người ở 1 địa điểm.
     @ManyToOne

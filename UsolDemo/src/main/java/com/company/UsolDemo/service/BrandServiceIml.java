@@ -1,7 +1,7 @@
 package com.company.UsolDemo.service;
 
+import com.company.UsolDemo.exception.BrandNotFoundException;
 import com.company.UsolDemo.models.Brand;
-import com.company.UsolDemo.models.ResponseObject;
 import com.company.UsolDemo.repository.BrandRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -9,7 +9,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class BrandServiceIml implements BrandService{
@@ -17,65 +16,39 @@ public class BrandServiceIml implements BrandService{
     private BrandRepository repo;
 
     @Override
-    public ResponseEntity<ResponseObject> saveBrand(Brand brand) {
-        List<Brand> foundBrands = repo.findByBrandName(brand.getBrandName().trim());
-        return foundBrands.size()>0?
-                ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED).body(
-                        new ResponseObject("Failed","Brand name already taken","")
-                ):
-                ResponseEntity.status(HttpStatus.OK).body(
-                        new ResponseObject("Ok","Insert brand successfully",repo.save(brand))
-                );
+    public Brand saveBrand(Brand newBrand) {
+        return repo.save(newBrand);
     }
 
     @Override
-    public ResponseEntity<ResponseObject> getAll() {
-        return ResponseEntity.status(HttpStatus.OK).body(
-                new ResponseObject("Ok","Querry brand success!",repo.findAll())
-        );
+    public List<Brand> getAll() {
+        return repo.findAll();
     }
 
     @Override
-    public ResponseEntity<ResponseObject> findById(Long id) {
-        Optional<Brand> foundBrand = repo.findById(id);
-        return foundBrand.isPresent()?
-                ResponseEntity.status(HttpStatus.OK).body(
-                        new ResponseObject("Ok","Query brand successfully!",foundBrand)
-                ):
-                ResponseEntity.status(HttpStatus.NOT_FOUND).body(
-                        new ResponseObject("Failed","Cannot find brand with id = "+id,"")
-                );
+    public Brand findById(Long id) {
+        return repo.findById(id)
+                .orElseThrow(()->new BrandNotFoundException(id));
     }
 
     @Override
-    public ResponseEntity<ResponseObject> update(Brand newBrand, Long id) {
-        Brand updateBrand = repo.findById(id)
+    public Brand update(Brand newBrand, Long id) {
+        return repo.findById(id)
                 .map(brand -> {
                     brand.setBrandName(newBrand.getBrandName());
                     brand.setBrandImage(newBrand.getBrandImage());
                     brand.setProducts(newBrand.getProducts());
                     return repo.save(brand);
-                }).orElseGet(()->{
-                    newBrand.setBrandId(id);
-                    return repo.save(newBrand);
-                });
-        return ResponseEntity.status(HttpStatus.OK).body(
-                new ResponseObject("Ok","Update brand successfully",updateBrand)
-        );
+                }).orElseThrow(()->new BrandNotFoundException(id));
     }
 
     @Override
-    public ResponseEntity<ResponseObject> delete(Long id) {
-        boolean exists = repo.existsById(id);
-        if(exists){
-            repo.deleteById(id);
-            return ResponseEntity.status(HttpStatus.OK).body(
-                    new ResponseObject("Ok","Delete brand successfully","")
-            );
+    public String delete(Long id) {
+        if(!repo.existsById(id)){
+            throw new BrandNotFoundException(id);
         }
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(
-                new ResponseObject("Failed","Cannot find brand id to delete"," ")
-        );
+        repo.deleteById(id);
+        return "User with id "+ id +" id has been deleted success!";
     }
 
 }
