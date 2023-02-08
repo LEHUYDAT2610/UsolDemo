@@ -13,12 +13,8 @@ import lombok.NoArgsConstructor;
 public class OrderDetail {
     @EmbeddedId
     private CourseRatingKey id;
-
     @Column(name = "OrderQuantity")
     private int orderQuantity;
-    @Column(name = "OrderAmuont")
-    private double orderAmuont;
-
     @ManyToOne
     @MapsId("OrderID")
     @JoinColumn(name = "OrderID")

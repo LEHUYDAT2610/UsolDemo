@@ -1,10 +1,14 @@
 package com.company.UsolDemo.service;
 
+import com.company.UsolDemo.models.Brand;
 import com.company.UsolDemo.models.Category;
 
 import java.util.List;
 
 public interface CategoryService {
-    public Category saveCategory(Category category);
-    public List<Category> getAll();
+    Category save(Category newCategory);
+    List<Category> getAll();
+    Category findById(Long id);
+    Category update(Category newCategory,Long id);
+    String delete(Long id);
 }

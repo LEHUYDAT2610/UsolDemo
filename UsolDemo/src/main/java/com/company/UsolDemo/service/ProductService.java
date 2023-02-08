@@ -1,10 +1,14 @@
 package com.company.UsolDemo.service;
 
+import com.company.UsolDemo.models.Brand;
 import com.company.UsolDemo.models.Product;
 
 import java.util.List;
 
 public interface ProductService {
-    public Product saveProduct(Product product);
-    public List<Product> getAll();
+    Product save(Product newProduct);
+    List<Product> getAll();
+    Product findById(Long id);
+    Product update(Product newProduct,Long id);
+    String delete(Long id);
 }

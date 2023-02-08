@@ -12,7 +12,7 @@ import java.io.Serializable;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class CourseRatingKey  implements Serializable {
+public class CourseRatingKey implements Serializable {
     @Column(name = "OrderID")
     Long orderID;
 

@@ -1,11 +1,14 @@
 package com.company.UsolDemo.models;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "Product")
@@ -27,8 +30,6 @@ public class Product {
     private String productDecription;
     @Column(name = "Discount")
     private double discount;
-    @Column(name = "Image")
-    private String image;
     @Column(name = "ProductCreated")
     private Date productCreated;
 
@@ -44,4 +45,9 @@ public class Product {
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
     private Category category;
+
+    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    @JoinColumn(name = "productid")
+    @JsonManagedReference
+    private List<Image> images = new ArrayList<>();
 }

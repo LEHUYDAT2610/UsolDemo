@@ -2,12 +2,22 @@ package com.company.UsolDemo.service;
 
 import com.company.UsolDemo.exception.BrandNotFoundException;
 import com.company.UsolDemo.models.Brand;
+import com.company.UsolDemo.models.Product;
+import com.company.UsolDemo.models.dto.BrandDto;
 import com.company.UsolDemo.repository.BrandRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -16,8 +26,31 @@ public class BrandServiceIml implements BrandService{
     private BrandRepository repo;
 
     @Override
-    public Brand saveBrand(Brand newBrand) {
-        return repo.save(newBrand);
+    public Brand save(BrandDto brandDto) {
+        Brand brand = new Brand();
+        brand.setBrandName(brandDto.getBrandName());
+
+        getImageFromDto(brandDto, brand);
+
+        return repo.save(brand);
+    }
+
+    private static void getImageFromDto(BrandDto brandDto, Brand brand) {
+        MultipartFile image = brandDto.getBrandImage();
+
+        Path path = Paths.get("uploads/");
+        if(image.isEmpty()){
+            brand.setBrandImage("defaul.jpg");
+        }
+        try {
+            InputStream inputStream = image.getInputStream();
+            Files.copy(inputStream,path.resolve(image.getOriginalFilename()),
+                    StandardCopyOption.REPLACE_EXISTING);
+            brand.setBrandImage(image.getOriginalFilename().toLowerCase());
+
+        }catch (Exception ex){
+
+        }
     }
 
     @Override
@@ -32,12 +65,11 @@ public class BrandServiceIml implements BrandService{
     }
 
     @Override
-    public Brand update(Brand newBrand, Long id) {
+    public Brand update(BrandDto brandDto, Long id) {
         return repo.findById(id)
                 .map(brand -> {
-                    brand.setBrandName(newBrand.getBrandName());
-                    brand.setBrandImage(newBrand.getBrandImage());
-                    brand.setProducts(newBrand.getProducts());
+                    brand.setBrandName(brandDto.getBrandName());
+                    getImageFromDto(brandDto,brand);
                     return repo.save(brand);
                 }).orElseThrow(()->new BrandNotFoundException(id));
     }
@@ -48,7 +80,7 @@ public class BrandServiceIml implements BrandService{
             throw new BrandNotFoundException(id);
         }
         repo.deleteById(id);
-        return "User with id "+ id +" id has been deleted success!";
+        return "Brand with id "+ id +" id has been deleted success!";
     }
 
 }

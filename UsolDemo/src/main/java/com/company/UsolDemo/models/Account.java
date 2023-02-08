@@ -37,18 +37,17 @@ public class Account {
     @Column(name = "Role")
     private int accountRole;
 
-    @OneToMany(mappedBy = "account", cascade = CascadeType.ALL)
-    @EqualsAndHashCode.Exclude
-    @ToString.Exclude
-    private Collection<Order> orders;
+//    @OneToMany(mappedBy = "account", cascade = CascadeType.ALL)
+//    @EqualsAndHashCode.Exclude
+//    @ToString.Exclude
+//    private Collection<Order> orders;
 
     public Account(AccountDto accountDto) {
-        this.accountID = accountDto.getAccount_ID();
+        this.accountID = accountDto.getAccountID();
         this.userName = accountDto.getUserName();
         this.fullName = accountDto.getFullName();
         this.address = accountDto.getAddress();
         this.phone = accountDto.getPhone();
         this.email = accountDto.getEmail();
-        this.accountImage = accountDto.getAccountImage();
     }
 }

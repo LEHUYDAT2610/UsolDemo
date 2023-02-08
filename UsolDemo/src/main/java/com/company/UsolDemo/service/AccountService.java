@@ -6,6 +6,9 @@ import com.company.UsolDemo.models.dto.AccountDto;
 import java.util.List;
 
 public interface AccountService {
-    public Account saveAccount(Account account);
-    public List<AccountDto> getAll();
+    Account save(Account account);
+    List<Account> getAll();
+    Account findById(Long id);
+    Account update(Account account,Long id);
+    String delete(Long id);
 }
