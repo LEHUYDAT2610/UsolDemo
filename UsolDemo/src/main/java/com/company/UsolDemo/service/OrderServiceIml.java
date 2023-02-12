@@ -3,12 +3,14 @@ package com.company.UsolDemo.service;
 import com.company.UsolDemo.exception.BrandNotFoundException;
 import com.company.UsolDemo.exception.OrderNotFoundException;
 import com.company.UsolDemo.models.Order;
+import com.company.UsolDemo.models.dto.OrderDTO;
 import com.company.UsolDemo.repository.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class OrderServiceIml implements OrderService{
@@ -49,5 +51,21 @@ public class OrderServiceIml implements OrderService{
         }
         repo.deleteById(id);
         return "Order with id "+ id +" id has been deleted success!";
+    }
+
+    @Override
+    public List<OrderDTO> GetOrder() {
+        List<OrderDTO> orderDTOList=repo.GetOrder().stream().map((value)->{
+            String username=(String) value[0];
+            Date orderDate=(Date) value[1];
+            Integer status=(Integer) value[2];
+            return new OrderDTO(username,orderDate,status);
+        }).collect(Collectors.toList());
+        return  orderDTOList;
+    }
+
+    @Override
+    public void UpdateOrder(long id) {
+        repo.UpdateOrder(id);
     }
 }

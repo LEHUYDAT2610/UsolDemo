@@ -17,4 +17,14 @@ public class AccountDto {
     private MultipartFile accountImage;
     private int accountRole;
     private int accountStatus;
+
+    public AccountDto(String userName, String fullName, String address, String phone, String email, MultipartFile accountImage) {
+        this.userName = userName;
+        this.fullName = fullName;
+        this.address = address;
+        this.phone = phone;
+        this.email = email;
+        this.accountImage = accountImage;
+    }
+
 }

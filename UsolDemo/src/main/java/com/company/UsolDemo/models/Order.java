@@ -19,7 +19,6 @@ public class Order {
     private Date orderDate;
     @Column(name = "OrderStatus")
     private int orderStatus;
-
     @ManyToOne
     @JoinColumn(name = "accountID") // thông qua khóa ngoại address_id
     @EqualsAndHashCode.Exclude

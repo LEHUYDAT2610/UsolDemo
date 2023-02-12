@@ -50,4 +50,19 @@ public class Account {
         this.phone = accountDto.getPhone();
         this.email = accountDto.getEmail();
     }
+
+    public Account(String password) {
+        this.password = password;
+    }
+
+    public Account(String userName, String fullName, String password, String address, String phone, String email, int accountStatus, int accountRole) {
+        this.userName = userName;
+        this.fullName = fullName;
+        this.password = password;
+        this.address = address;
+        this.phone = phone;
+        this.email = email;
+        this.accountStatus = accountStatus;
+        this.accountRole = accountRole;
+    }
 }

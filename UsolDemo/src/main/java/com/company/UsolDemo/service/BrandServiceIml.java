@@ -37,7 +37,6 @@ public class BrandServiceIml implements BrandService{
 
     private static void getImageFromDto(BrandDto brandDto, Brand brand) {
         MultipartFile image = brandDto.getBrandImage();
-
         Path path = Paths.get("uploads/");
         if(image.isEmpty()){
             brand.setBrandImage("defaul.jpg");
@@ -47,7 +46,6 @@ public class BrandServiceIml implements BrandService{
             Files.copy(inputStream,path.resolve(image.getOriginalFilename()),
                     StandardCopyOption.REPLACE_EXISTING);
             brand.setBrandImage(image.getOriginalFilename().toLowerCase());
-
         }catch (Exception ex){
 
         }

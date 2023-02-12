@@ -2,6 +2,7 @@ package com.company.UsolDemo.service;
 
 import com.company.UsolDemo.models.Brand;
 import com.company.UsolDemo.models.Order;
+import com.company.UsolDemo.models.dto.OrderDTO;
 import org.aspectj.weaver.ast.Or;
 
 import java.util.List;
@@ -12,4 +13,7 @@ public interface OrderService {
     Order findById(Long id);
     Order update(Order newOrder,Long id);
     String delete(Long id);
+
+    List<OrderDTO> GetOrder();
+    public void UpdateOrder(long id);
 }
