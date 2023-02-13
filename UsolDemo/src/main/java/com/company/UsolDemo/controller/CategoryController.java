@@ -2,16 +2,21 @@ package com.company.UsolDemo.controller;
 
 import com.company.UsolDemo.models.Brand;
 import com.company.UsolDemo.models.Category;
+import com.company.UsolDemo.models.dto.BrandDto;
+import com.company.UsolDemo.models.dto.CategoryDto;
 import com.company.UsolDemo.service.BrandService;
 import com.company.UsolDemo.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
 @RestController
 @RequestMapping("/category")
+@CrossOrigin
 public class CategoryController {
     @Autowired
     private CategoryService service;
@@ -28,14 +33,35 @@ public class CategoryController {
         return ResponseEntity.ok(category);
     }
 
-    @PostMapping("/add")
-    public ResponseEntity<?> insert(@RequestBody Category newCategory){
-        return ResponseEntity.ok(service.save(newCategory));
+    @PostMapping(value = "/add",
+            consumes = MediaType.MULTIPART_FORM_DATA_VALUE,
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> insert(@RequestParam("categoryName") String categoryName,
+                                    @RequestParam("categoryImage") MultipartFile categoryImage){
+        CategoryDto categoryDto = new CategoryDto();
+        categoryDto.setCategoryName(categoryName);
+        categoryDto.setCategoryImage(categoryImage);
+        return ResponseEntity.ok(service.save(categoryDto));
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<?> update(@RequestBody Category category,@PathVariable Long id){
-        return ResponseEntity.ok(service.update(category, id));
+    @PutMapping(value = "/withImage/{id}",
+            consumes = MediaType.MULTIPART_FORM_DATA_VALUE,
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> updateWithImage(@RequestParam("categoryName") String categoryName,
+                                             @RequestParam("categoryImage") MultipartFile categoryImage,
+                                             @PathVariable Long id) {
+        CategoryDto categoryDto = new CategoryDto();
+        categoryDto.setCategoryName(categoryName);
+        categoryDto.setCategoryImage(categoryImage);
+        return ResponseEntity.ok(service.update(categoryDto, id));
+    }
+
+    @PutMapping("/noImage/{id}")
+    public ResponseEntity<?> updateNoImage(@RequestParam("categoryName") String categoryName,
+                                           @PathVariable Long id) {
+        CategoryDto categoryDto = new CategoryDto();
+        categoryDto.setCategoryName(categoryName);
+        return ResponseEntity.ok(service.update(categoryDto, id));
     }
 
     @DeleteMapping("/{id}")

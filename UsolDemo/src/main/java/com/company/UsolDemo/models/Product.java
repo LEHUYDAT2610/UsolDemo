@@ -4,10 +4,10 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.sql.Date;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -46,8 +46,8 @@ public class Product {
     @ToString.Exclude
     private Category category;
 
-    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
-    @JoinColumn(name = "productid")
-    @JsonManagedReference
-    private List<Image> images = new ArrayList<>();
+    @Override
+    public String toString() {
+        return productName;
+    }
 }

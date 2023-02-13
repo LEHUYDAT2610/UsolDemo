@@ -1,9 +1,16 @@
 package com.company.UsolDemo.controller;
 
 import com.company.UsolDemo.models.Brand;
+import com.company.UsolDemo.models.Category;
 import com.company.UsolDemo.models.Product;
+import com.company.UsolDemo.models.dto.ProductDto;
+import com.company.UsolDemo.repository.BrandRepository;
+import com.company.UsolDemo.repository.CategoryRepository;
+import com.company.UsolDemo.service.BrandService;
+import com.company.UsolDemo.service.CategoryService;
 import com.company.UsolDemo.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,6 +22,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/product")
+@CrossOrigin
 public class ProductController {
     @Autowired
     private ProductService service;
@@ -31,14 +39,14 @@ public class ProductController {
         return ResponseEntity.ok(product);
     }
 
-    @PostMapping("/add")
-    public ResponseEntity<?> insert(@RequestBody Product newProduct){
-        return ResponseEntity.ok(service.save(newProduct));
+    @PostMapping(value = "/add")
+    public ResponseEntity<?> insert(@RequestBody ProductDto productDto){
+        return ResponseEntity.ok(service.save(productDto));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<?> update(@RequestBody Product product,@PathVariable Long id){
-        return ResponseEntity.ok(service.update(product, id));
+    public ResponseEntity<?> update(@RequestBody ProductDto productDto,@PathVariable Long id){
+        return ResponseEntity.ok(service.update(productDto, id));
     }
 
     @DeleteMapping("/{id}")

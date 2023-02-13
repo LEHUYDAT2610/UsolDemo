@@ -1,9 +1,8 @@
 package com.company.UsolDemo.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Entity
 @Data
@@ -15,7 +14,9 @@ public class Image {
     private Long imageID;
     private String imageName;
 
-    @ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
-    @JoinColumn(name = "productid",referencedColumnName = "productid")
+    @ManyToOne
+    @JoinColumn(name = "productid")
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
     private Product product;
 }

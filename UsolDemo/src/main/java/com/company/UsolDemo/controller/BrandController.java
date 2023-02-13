@@ -42,14 +42,22 @@ public class BrandController {
         return ResponseEntity.ok(service.save(brandDto));
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<?> update(@RequestParam("name") String brandName,
+    @PutMapping("/withImage/{id}")
+    public ResponseEntity<?> updateWithImage(@RequestParam("brandName") String brandName,
                                     @RequestParam("brandImage") MultipartFile brandImage,
                                     @PathVariable Long id) {
-        BrandDto brandDto = new BrandDto();
-        brandDto.setBrandName(brandName);
-        brandDto.setBrandImage(brandImage);
-        return ResponseEntity.ok(service.update(brandDto, id));
+        BrandDto newBrandDto = new BrandDto();
+        newBrandDto.setBrandName(brandName);
+        newBrandDto.setBrandImage(brandImage);
+        return ResponseEntity.ok(service.update(newBrandDto, id));
+    }
+
+    @PutMapping("/noImage/{id}")
+    public ResponseEntity<?> updateNoImage(@RequestParam("brandName") String brandName,
+                                    @PathVariable Long id) {
+        BrandDto newBrandDto = new BrandDto();
+        newBrandDto.setBrandName(brandName);
+        return ResponseEntity.ok(service.update(newBrandDto, id));
     }
 
     @DeleteMapping("/{id}")

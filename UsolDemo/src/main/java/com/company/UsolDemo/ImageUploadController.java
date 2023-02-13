@@ -13,12 +13,48 @@ import java.nio.file.Paths;
 @Controller
 @CrossOrigin
 public class ImageUploadController {
-    @RequestMapping(value = "getimage/{image}",method = RequestMethod.GET)
+    @RequestMapping(value = "getimage/image/{image}",method = RequestMethod.GET)
     @ResponseBody
     public ResponseEntity<ByteArrayResource> getImage(@PathVariable String image){
         if(!image.equals("")||image != null){
             try {
-                Path fileName = Paths.get("uploads",image);
+                Path fileName = Paths.get("uploads/image",image);
+                byte[] buffer = Files.readAllBytes(fileName);
+                ByteArrayResource byteArrayResource = new ByteArrayResource(buffer);
+                return ResponseEntity.ok()
+                        .contentLength(buffer.length)
+                        .contentType(MediaType.parseMediaType("image/png"))
+                        .body(byteArrayResource);
+            }catch (Exception ex){
+
+            }
+        }
+        return ResponseEntity.badRequest().build();
+    }
+    @RequestMapping(value = "getimage/brand/{image}",method = RequestMethod.GET)
+    @ResponseBody
+    public ResponseEntity<ByteArrayResource> getBrandImage(@PathVariable String image){
+        if(!image.equals("")||image != null){
+            try {
+                Path fileName = Paths.get("uploads/brand",image);
+                byte[] buffer = Files.readAllBytes(fileName);
+                ByteArrayResource byteArrayResource = new ByteArrayResource(buffer);
+                return ResponseEntity.ok()
+                        .contentLength(buffer.length)
+                        .contentType(MediaType.parseMediaType("image/png"))
+                        .body(byteArrayResource);
+            }catch (Exception ex){
+
+            }
+        }
+        return ResponseEntity.badRequest().build();
+    }
+    @RequestMapping(value = "getimage/category/{image}",method = RequestMethod.GET)
+    @ResponseBody
+    public ResponseEntity<ByteArrayResource> getCategoryImage(@PathVariable String image){
+        if(!image.equals("")||image != null){
+            try {
+                Path fileName = Paths.get("uploads/category",image);
                 byte[] buffer = Files.readAllBytes(fileName);
                 ByteArrayResource byteArrayResource = new ByteArrayResource(buffer);
                 return ResponseEntity.ok()

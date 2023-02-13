@@ -6,13 +6,15 @@ import com.company.UsolDemo.exception.ProductNotFoundException;
 import com.company.UsolDemo.models.Brand;
 import com.company.UsolDemo.models.Category;
 import com.company.UsolDemo.models.Product;
+import com.company.UsolDemo.models.dto.ProductDto;
 import com.company.UsolDemo.repository.BrandRepository;
 import com.company.UsolDemo.repository.CategoryRepository;
 import com.company.UsolDemo.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
+import java.sql.Date;
+import java.util.Calendar;
 import java.util.List;
 
 @Service
@@ -21,8 +23,18 @@ public class ProductServiceIml implements ProductService{
     private ProductRepository repo;
 
     @Override
-    public Product save(Product newProduct) {
-        return repo.save(newProduct);
+    public Product save(ProductDto productDto) {
+        Product product = new Product();
+        product.setProductName(productDto.getProductName());
+        product.setProductDecription(productDto.getProductDecription());
+        product.setPrice(productDto.getPrice());
+        product.setDiscount(productDto.getDiscount());
+        product.setBrand(productDto.getBrand());
+        product.setCategory(productDto.getCategory());
+        long millis = System.currentTimeMillis();
+        Date date = new Date(millis);
+        product.setProductCreated(date);
+        return repo.save(product);
     }
 
     @Override
@@ -37,17 +49,16 @@ public class ProductServiceIml implements ProductService{
     }
 
     @Override
-    public Product update(Product newProduct, Long id) {
+    public Product update(ProductDto productDto, Long id) {
         return repo.findById(id)
                 .map(product -> {
-                    product.setProductCreated(newProduct.getProductCreated());
-                    product.setProductDecription(newProduct.getProductDecription());
-                    product.setProductName(newProduct.getProductName());
-                    product.setBrand(newProduct.getBrand());
-                    product.setCategory(newProduct.getCategory());
-                    product.setDiscount(newProduct.getDiscount());
-                    product.setPrice(newProduct.getPrice());
-                    product.setImages(newProduct.getImages());
+                    product.setProductCreated(productDto.getProductCreated());
+                    product.setProductDecription(productDto.getProductDecription());
+                    product.setProductName(productDto.getProductName());
+                    product.setBrand(productDto.getBrand());
+                    product.setCategory(productDto.getCategory());
+                    product.setDiscount(productDto.getDiscount());
+                    product.setPrice(productDto.getPrice());
                     return repo.save(product);
                 }).orElseThrow(()->new BrandNotFoundException(id));
     }

@@ -3,6 +3,7 @@ package com.company.UsolDemo.service;
 import com.company.UsolDemo.models.Brand;
 import com.company.UsolDemo.models.dto.BrandDto;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
