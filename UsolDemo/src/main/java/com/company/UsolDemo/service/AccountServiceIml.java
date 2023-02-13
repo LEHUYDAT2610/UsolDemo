@@ -51,6 +51,8 @@ public class AccountServiceIml implements AccountService{
         BCryptPasswordEncoder bcript=new BCryptPasswordEncoder();
         String passEncode= bcript.encode(account.getPassword());
         account.setPassword(passEncode);
+        account.setAccountRole(1);
+        account.setAccountStatus(1);
         repo.save(account);
     }
     private static void getImageFromDto(AccountDto accountDto, Account account) {

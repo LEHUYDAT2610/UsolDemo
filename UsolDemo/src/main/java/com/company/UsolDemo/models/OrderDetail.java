@@ -15,8 +15,6 @@ public class OrderDetail {
     private CourseRatingKey id;
     @Column(name = "OrderQuantity")
     private int orderQuantity;
-
-
     @ManyToOne
     @MapsId("OrderID")
     @JoinColumn(name = "OrderID")

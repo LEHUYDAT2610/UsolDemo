@@ -2,6 +2,7 @@ package com.company.UsolDemo.service;
 
 import com.company.UsolDemo.models.Brand;
 import com.company.UsolDemo.models.Order;
+import com.company.UsolDemo.models.dto.BillDTO;
 import com.company.UsolDemo.models.dto.OrderDTO;
 import org.aspectj.weaver.ast.Or;
 
@@ -16,4 +17,7 @@ public interface OrderService {
 
     List<OrderDTO> GetOrder();
     public void UpdateOrder(long id);
+    public void Order(long accountid, long productid,int quatity);
+    //xem hóa đơn
+    public List<BillDTO> GetBill(long id);
 }

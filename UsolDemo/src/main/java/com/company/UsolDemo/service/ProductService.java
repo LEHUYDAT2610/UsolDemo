@@ -12,4 +12,5 @@ public interface ProductService {
     Product findById(Long id);
     Product update(ProductDto productDto,Long id);
     String delete(Long id);
+    List<Product> getAllByName(String name);
 }
