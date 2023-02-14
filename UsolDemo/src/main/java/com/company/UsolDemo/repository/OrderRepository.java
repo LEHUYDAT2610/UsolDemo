@@ -24,4 +24,7 @@ public interface OrderRepository extends JpaRepository<Order,Long> {
     //xem hoa dơn
     @Procedure("proc_xemhoadon")
     public List<Object[]> GetBill(@Param("id") long id);
+
+    @Procedure("proc_HuyDonHang")
+    public void HuyDonHang(@Param("id") long id);
 }

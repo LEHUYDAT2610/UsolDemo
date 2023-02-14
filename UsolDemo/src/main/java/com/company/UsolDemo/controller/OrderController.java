@@ -67,7 +67,6 @@ public class OrderController {
         }
     }
     //Xóa đơn hàng
-
     @DeleteMapping("/{id}")
     public ResponseEntity<?> delete(@PathVariable Long id){
         return ResponseEntity.ok(service.delete(id));
@@ -87,6 +86,7 @@ public class OrderController {
             return ResponseEntity.status(500).body(errorMessage);
         }
     }
+    //xem hóa đơn theo id khách hàng
     @GetMapping("/xemhoadon/{id}")
     @Transactional
     public ResponseEntity<?>Order(@PathVariable long id){
@@ -100,4 +100,17 @@ public class OrderController {
             return ResponseEntity.status(500).body(errorMessage);
         }
     }
+    @PostMapping("/huydonhang/{id}")
+    public ResponseEntity<?> HuyDonHang(@PathVariable long id){
+        try {
+            service.HuyDonHang(id);
+            return  ResponseEntity.ok(200);
+        }catch (Exception ex){
+            Map<String,String> errorMessage = new HashMap<>();
+            errorMessage.put("devMsg", ex.getMessage());
+            errorMessage.put("userMsg","Có lỗi xẩy ra vui lòng liên hệ Dat 09 để được hỗ trợ!");
+            return ResponseEntity.status(500).body(errorMessage);
+        }
+    }
+
 }

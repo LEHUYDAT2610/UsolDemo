@@ -60,8 +60,9 @@ public class OrderServiceIml implements OrderService{
             Long orderId=(Long) value[0];
             Date orderDate=(Date) value[1];
             Integer status=(Integer) value[2];
-            Long accountId=(Long) value[3];
-            return new OrderDTO(orderId,orderDate,status,accountId);
+            String orderStatus = ConfirmOrder(status);
+            String username=(String) value[3];
+            return new OrderDTO(orderId,orderDate,orderStatus,username);
         }).collect(Collectors.toList());
         return  orderDTOList;
     }
@@ -89,6 +90,11 @@ public class OrderServiceIml implements OrderService{
            return new BillDTO(productName,orderDate,status,quantity,price,total);
         }).collect(Collectors.toList());
         return  billDTOS;
+    }
+
+    @Override
+    public void HuyDonHang(long id) {
+        repo.HuyDonHang(id);
     }
 
     private static String ConfirmOrder(Integer orderStatus) {

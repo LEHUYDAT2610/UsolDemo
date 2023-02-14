@@ -19,5 +19,6 @@ public interface AccountService {
     //thay doi quyen cho account
     Account UpdateAccountAd(long id, Account account,MultipartFile image);
     String SendPassword(String email);
+    void DeleteAccunt(long id);
 
 }

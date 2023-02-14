@@ -20,4 +20,5 @@ public interface OrderService {
     public void Order(long accountid, long productid,int quatity);
     //xem hóa đơn
     public List<BillDTO> GetBill(long id);
+    public void HuyDonHang(long id);
 }

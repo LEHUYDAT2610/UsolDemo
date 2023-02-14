@@ -200,4 +200,9 @@ public class AccountServiceIml implements AccountService{
 
     }
 
+    @Override
+    public void DeleteAccunt(long id) {
+        repo.DeleteAccount(id);
+    }
+
 }

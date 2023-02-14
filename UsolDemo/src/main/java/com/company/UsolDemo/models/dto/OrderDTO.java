@@ -11,6 +11,6 @@ import java.util.Date;
 public class OrderDTO {
     private long oderId;
     private Date orderDate;
-    private int orderStatus;
-    private long accountId;
+    private String orderStatus;
+    private String username;
 }

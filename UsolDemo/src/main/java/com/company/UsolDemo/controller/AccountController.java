@@ -78,6 +78,13 @@ public class AccountController {
         String status=service.SendPassword(email);
         return ResponseEntity.ok(status);
     }
+    @PutMapping("/deleteaccount/{id}")
+    public ResponseEntity<?> updateAccountAdmin( @PathVariable Long id)
+    {
+        service.DeleteAccunt(id);
+        return ResponseEntity.ok(200);
+    }
+
 //export account data excel chi can goi toi link localhost:8080/account/exportacccount/excel và gan link len thanh tim kiem goolge
 // thi tu dong tai file excel ve
     @GetMapping("/exportacccount/excel")
