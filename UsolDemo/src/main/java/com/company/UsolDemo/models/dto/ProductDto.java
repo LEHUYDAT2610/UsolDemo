@@ -25,6 +25,7 @@ public class ProductDto {
     private Date productCreated;
     private Brand brand;
     private Category category;
+    private MultipartFile productImage;
     private List<Image> images = new ArrayList<>();
 
     public ProductDto(String productName, double price, String productDecription, double discount, Brand brand, Category category) {
@@ -35,4 +36,15 @@ public class ProductDto {
         this.brand = brand;
         this.category = category;
     }
+
+    public ProductDto(String productName, double price, String productDecription, double discount, Brand brand, Category category, MultipartFile productImage) {
+        this.productName = productName;
+        this.price = price;
+        this.productDecription = productDecription;
+        this.discount = discount;
+        this.brand = brand;
+        this.category = category;
+        this.productImage = productImage;
+    }
+
 }

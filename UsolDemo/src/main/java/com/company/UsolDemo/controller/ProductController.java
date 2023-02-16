@@ -3,6 +3,7 @@ package com.company.UsolDemo.controller;
 import com.company.UsolDemo.models.Brand;
 import com.company.UsolDemo.models.Category;
 import com.company.UsolDemo.models.Product;
+import com.company.UsolDemo.models.dto.AccountDto;
 import com.company.UsolDemo.models.dto.ProductDto;
 import com.company.UsolDemo.repository.BrandRepository;
 import com.company.UsolDemo.repository.CategoryRepository;
@@ -13,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -27,6 +29,12 @@ public class ProductController {
     @Autowired
     private ProductService service;
 
+    @Autowired
+    private CategoryService categoryService;
+
+    @Autowired
+    private BrandService brandService;
+
     @GetMapping("/getAll")
     public ResponseEntity<?> getAll() {
         List<Product> products = service.getAll();
@@ -39,14 +47,48 @@ public class ProductController {
         return ResponseEntity.ok(product);
     }
 
-    @PostMapping(value = "/add")
-    public ResponseEntity<?> insert(@RequestBody ProductDto productDto){
+    @PostMapping(value = "/add",
+            consumes = MediaType.MULTIPART_FORM_DATA_VALUE,
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> insert(@RequestParam("productName") String productName,
+                                    @RequestParam("price") double price,
+                                    @RequestParam("productDecription") String productDecription,
+                                    @RequestParam("discount") double discount,
+                                    @RequestParam("productImage") MultipartFile productImage,
+                                    @RequestParam("categoryId") Long categoryId,
+                                    @RequestParam("brandId") Long brandId){
+        ProductDto productDto = new ProductDto(productName,price,productDecription,discount,brandService.findById(brandId),categoryService.findById(categoryId),productImage);
         return ResponseEntity.ok(service.save(productDto));
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<?> update(@RequestBody ProductDto productDto,@PathVariable Long id){
         return ResponseEntity.ok(service.update(productDto, id));
+    }
+
+    @PutMapping("/withImage/{id}")
+    public ResponseEntity<?> updateWithImage(@RequestParam("productName") String productName,
+                                             @RequestParam("price") double price,
+                                             @RequestParam("productDecription") String productDecription,
+                                             @RequestParam("discount") double discount,
+                                             @RequestParam("productImage") MultipartFile productImage,
+                                             @RequestParam("categoryId") Long categoryId,
+                                             @RequestParam("brandId") Long brandId,
+                                             @PathVariable Long id) {
+        ProductDto productDto = new ProductDto(productName,price,productDecription,discount,brandService.findById(brandId),categoryService.findById(categoryId),productImage);
+        return ResponseEntity.ok(service.update(productDto,id));
+    }
+
+    @PutMapping("/noImage/{id}")
+    public ResponseEntity<?> updateNoImage(@RequestParam("productName") String productName,
+                                           @RequestParam("price") double price,
+                                           @RequestParam("productDecription") String productDecription,
+                                           @RequestParam("discount") double discount,
+                                           @RequestParam("categoryId") Long categoryId,
+                                           @RequestParam("brandId") Long brandId,
+                                           @PathVariable Long id) {
+        ProductDto productDto = new ProductDto(productName,price,productDecription,discount,brandService.findById(brandId),categoryService.findById(categoryId));
+        return ResponseEntity.ok(service.update(productDto,id));
     }
 
     @DeleteMapping("/{id}")

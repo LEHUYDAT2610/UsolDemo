@@ -36,6 +36,9 @@ public class Product {
     @Column(name = "ProductCreated")
     private Date productCreated;
 
+    @Column(name = "ProductImage")
+    private String productImage;
+
     @ManyToOne
     @JoinColumn(name = "BrandID")
     @EqualsAndHashCode.Exclude
@@ -50,6 +53,7 @@ public class Product {
 
     @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     @JoinColumn(name = "productid")
+    @JsonIgnore
     private List<Image> images = new ArrayList<>();
 
     @Override

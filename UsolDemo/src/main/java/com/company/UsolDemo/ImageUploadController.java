@@ -85,4 +85,22 @@ public class ImageUploadController {
         }
         return ResponseEntity.badRequest().build();
     }
+    @RequestMapping(value = "getimage/product/{image}",method = RequestMethod.GET)
+    @ResponseBody
+    public ResponseEntity<ByteArrayResource> getProductImage(@PathVariable String image){
+        if(!image.equals("")||image != null){
+            try {
+                Path fileName = Paths.get("uploads/product",image);
+                byte[] buffer = Files.readAllBytes(fileName);
+                ByteArrayResource byteArrayResource = new ByteArrayResource(buffer);
+                return ResponseEntity.ok()
+                        .contentLength(buffer.length)
+                        .contentType(MediaType.parseMediaType("image/png"))
+                        .body(byteArrayResource);
+            }catch (Exception ex){
+
+            }
+        }
+        return ResponseEntity.badRequest().build();
+    }
 }
