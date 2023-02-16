@@ -71,4 +71,13 @@ public class ProductServiceIml implements ProductService{
         repo.deleteById(id);
         return "Product with id "+ id +" id has been deleted success!";
     }
+
+    @Override
+    public List<Product> getAllByName(String name) {
+        List<Product> productList=repo.findByProductName(name);
+        if(productList==null){
+
+        }
+        return productList;
+    }
 }

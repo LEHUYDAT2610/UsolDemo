@@ -53,4 +53,10 @@ public class ProductController {
     public ResponseEntity<?> delete(@PathVariable Long id){
         return ResponseEntity.ok(service.delete(id));
     }
+
+    @GetMapping("/getbyname")
+    public ResponseEntity<?> findById(@RequestParam String name) {
+        List<Product> productList=service.getAllByName(name);
+        return ResponseEntity.ok(productList);
+    }
 }
