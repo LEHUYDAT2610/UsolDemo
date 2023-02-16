@@ -11,7 +11,7 @@ public interface OrderService {
     Order save(Order newOrder);
     List<Order> getAll();
     Order findById(Long id);
-    Order update(Order newOrder,Long id);
+    Order update(int orderStatus,Long id);
     String delete(Long id);
 
     List<OrderDTO> GetOrder();

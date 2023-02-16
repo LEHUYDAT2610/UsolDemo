@@ -38,9 +38,17 @@ public class AccountServiceIml implements AccountService{
     @Value("${spring.mail.username}")
     private String sender;
     @Override
-    public Account save(Account account) {
-        account.setAccountRole(1);
-        account.setAccountStatus(1);
+    public Account save(AccountDto accountDto) {
+        Account account = new Account();
+        account.setUserName(accountDto.getUserName());
+        account.setFullName(accountDto.getFullName());
+        account.setAddress(accountDto.getAddress());
+        account.setPhone(accountDto.getPhone());
+        account.setEmail(accountDto.getEmail());
+        account.setAccountRole(accountDto.getAccountRole());
+        account.setAccountStatus(accountDto.getAccountStatus());
+        getImageFromDto(accountDto,account);
+        account.setPassword(accountDto.getPassword());
         return repo.save(account);
     }
 
@@ -55,9 +63,9 @@ public class AccountServiceIml implements AccountService{
     }
     private static void getImageFromDto(AccountDto accountDto, Account account) {
         MultipartFile image=accountDto.getAccountImage();
-        Path path = Paths.get("uploads/");
+        Path path = Paths.get("uploads/account/");
         if(image.isEmpty()){
-            account.setAccountImage("defaul.jpg");
+            account.setAccountImage("default.jpg");
         }
         try {
             InputStream inputStream = image.getInputStream();
@@ -81,7 +89,7 @@ public class AccountServiceIml implements AccountService{
                     MultipartFile image=accountDto.getAccountImage();
                     Path path = Paths.get("uploads/account/");
                     if(image.isEmpty()){
-                        account.setAccountImage("defaul.jpg");
+                        account.setAccountImage("default.jpg");
                     }
                     try {
                         InputStream inputStream = image.getInputStream();
@@ -101,18 +109,22 @@ public class AccountServiceIml implements AccountService{
     }
 
     @Override
-    public Account update(Account newAccount, Long id) {
+    public Account update(AccountDto accountDto, Long id) {
         return repo.findById(id)
                 .map(account -> {
-                    account.setAccountRole(newAccount.getAccountRole());
-                    account.setAccountImage(newAccount.getAccountImage());
-                    account.setAccountStatus(newAccount.getAccountStatus());
-                    account.setEmail(newAccount.getEmail());
-                    account.setAddress(newAccount.getAddress());
-                    account.setFullName(newAccount.getFullName());
-                    account.setPhone(newAccount.getPhone());
-                    account.setUserName(newAccount.getUserName());
-                    account.setPassword(newAccount.getPassword());
+                    account.setAccountRole(accountDto.getAccountRole());
+                    if (accountDto.getAccountImage() != null) {
+                        getImageFromDto(accountDto, account);
+                    }
+                    account.setAccountStatus(accountDto.getAccountStatus());
+                    account.setEmail(accountDto.getEmail());
+                    account.setAddress(accountDto.getAddress());
+                    account.setFullName(accountDto.getFullName());
+                    account.setPhone(accountDto.getPhone());
+                    account.setUserName(accountDto.getUserName());
+                    if (accountDto.getPassword().equals("")==false) {
+                        account.setPassword(accountDto.getPassword());
+                    }
                     return repo.save(account);
                 }).orElseThrow(()->new AccountNotFoundException(id));
     }
@@ -196,6 +208,12 @@ public class AccountServiceIml implements AccountService{
         }
 
 
+    }
+
+    @Override
+    public Account findById(Long id) {
+        return repo.findById(id)
+                .orElseThrow(() -> new AccountNotFoundException(id));
     }
 
 }

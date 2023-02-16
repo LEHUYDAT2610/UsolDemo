@@ -68,4 +68,10 @@ public class ImageController {
     public ResponseEntity<?> delete(@PathVariable Long id) {
         return ResponseEntity.ok(service.delete(id));
     }
+
+    @GetMapping("/productid/{id}")
+    public ResponseEntity<?> getByProductId(@PathVariable Long id){
+        List<Image> images = service.getImageProductId(id);
+        return ResponseEntity.ok(images);
+    }
 }

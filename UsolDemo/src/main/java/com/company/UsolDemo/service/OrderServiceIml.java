@@ -34,12 +34,10 @@ public class OrderServiceIml implements OrderService{
     }
 
     @Override
-    public Order update(Order newOrder, Long id) {
+    public Order update(int orderStatus, Long id) {
         return repo.findById(id)
                 .map(order -> {
-                    order.setOrderDate(newOrder.getOrderDate());
-                    order.setOrderStatus(newOrder.getOrderStatus());
-                    order.setAccount(newOrder.getAccount());
+                    order.setOrderStatus(orderStatus);
                     return repo.save(order);
                 }).orElseThrow(()->new OrderNotFoundException(id));
     }

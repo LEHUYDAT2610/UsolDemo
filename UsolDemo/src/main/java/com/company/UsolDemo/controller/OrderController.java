@@ -17,6 +17,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/order")
+@CrossOrigin
 public class OrderController {
     @Autowired
     private OrderService service;
@@ -41,8 +42,8 @@ public class OrderController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<?> update(@RequestBody Order order,@PathVariable Long id){
-        return ResponseEntity.ok(service.update(order, id));
+    public ResponseEntity<?> update(@RequestParam("orderStatus") int orderStatus,@PathVariable Long id){
+        return ResponseEntity.ok(service.update(orderStatus, id));
     }
 
     @GetMapping ("/getallorder")

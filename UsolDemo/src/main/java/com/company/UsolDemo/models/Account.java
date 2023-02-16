@@ -13,7 +13,7 @@ import java.util.Collection;
 @AllArgsConstructor
 public class Account {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long accountID;
     @Column(name = "UserName")
     private String userName;

@@ -1,6 +1,6 @@
 package com.company.UsolDemo.models;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.*;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -8,6 +8,9 @@ import lombok.*;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+//@JsonIdentityInfo(
+//        generator = ObjectIdGenerators.PropertyGenerator.class,
+//        property = "imageID")
 public class Image {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -15,8 +18,7 @@ public class Image {
     private String imageName;
 
     @ManyToOne
-    @JoinColumn(name = "productid")
-    @EqualsAndHashCode.Exclude
-    @ToString.Exclude
+    @JoinColumn(name = "productid",referencedColumnName = "productid")
+    @JsonIgnore
     private Product product;
 }

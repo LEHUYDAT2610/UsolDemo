@@ -78,4 +78,9 @@ public class ImageServiceIml implements ImageService {
         repo.deleteById(id);
         return "Image with id " + id + " id has been deleted success!";
     }
+
+    @Override
+    public List<Image> getImageProductId(Long id) {
+        return repo.findByProductProductID(id);
+    }
 }

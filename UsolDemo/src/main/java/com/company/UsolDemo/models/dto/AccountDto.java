@@ -9,6 +9,7 @@ import org.springframework.web.multipart.MultipartFile;
 @AllArgsConstructor
 public class AccountDto {
     private Long accountID;
+    private String password;
     private String userName;
     private String fullName;
     private String address;
@@ -27,4 +28,26 @@ public class AccountDto {
         this.accountImage = accountImage;
     }
 
+    public AccountDto(String password, String userName, String fullName, String address, String phone, String email, MultipartFile accountImage, int accountRole, int accountStatus) {
+        this.password = password;
+        this.userName = userName;
+        this.fullName = fullName;
+        this.address = address;
+        this.phone = phone;
+        this.email = email;
+        this.accountImage = accountImage;
+        this.accountRole = accountRole;
+        this.accountStatus = accountStatus;
+    }
+
+    public AccountDto(String password, String userName, String fullName, String address, String phone, String email, int accountRole, int accountStatus) {
+        this.password = password;
+        this.userName = userName;
+        this.fullName = fullName;
+        this.address = address;
+        this.phone = phone;
+        this.email = email;
+        this.accountRole = accountRole;
+        this.accountStatus = accountStatus;
+    }
 }

@@ -12,4 +12,5 @@ public interface ImageService {
     Image findById(Long id);
     Image update(ImageDto imageDto,Long id);
     String delete(Long id);
+    List<Image> getImageProductId(Long id);
 }

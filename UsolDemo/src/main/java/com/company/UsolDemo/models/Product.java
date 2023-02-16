@@ -1,6 +1,6 @@
 package com.company.UsolDemo.models;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.*;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -15,6 +15,9 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+//@JsonIdentityInfo(
+//        generator = ObjectIdGenerators.PropertyGenerator.class,
+//        property = "productID")
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -33,18 +36,21 @@ public class Product {
     @Column(name = "ProductCreated")
     private Date productCreated;
 
-    // Many to One Có nhiều người ở 1 địa điểm.
     @ManyToOne
-    @JoinColumn(name = "BrandID") // thông qua khóa ngoại address_id
+    @JoinColumn(name = "BrandID")
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
     private Brand brand;
 
     @ManyToOne
-    @JoinColumn(name = "CategoryID") // thông qua khóa ngoại address_id
+    @JoinColumn(name = "CategoryID")
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
     private Category category;
+
+    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    @JoinColumn(name = "productid")
+    private List<Image> images = new ArrayList<>();
 
     @Override
     public String toString() {
